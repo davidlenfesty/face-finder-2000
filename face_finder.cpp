@@ -12,14 +12,33 @@ using namespace std;
 Ptr<SURF> detector;
 Ptr<FlannBasedMatcher> matcher;
 
-// Helper functions
-void load_and_train_image(char* fileString);
+/** @brief Loads images from the filesystem and trains FLANN matcher against them.
+ *
+ * @param fileString String that describes the location of the file.
+ * @param keypoints_list List of sets of keypoints that is appended to
+ * @param descriptors_list List of sets of descriptors that is appended to
+ */
+void load_and_train_image(String& file_string,
+        vector< vector<KeyPoint> > keypoints_list, vector<Mat> descriptors_list);
 
 int main(int argc, char** argv) {
     // Initialise SURF feature detector
     detector = SURF::create(); // TODO: tweak parameters
     // Initialise FLANN based feature matcher.
     matcher = FlannBasedMatcher::create();
+
+    vector< vector<KeyPoint> > keypoints_list;
+    vector<Mat> descriptors_list;
+
+    // Read in images
+    if (argc > 1) { // if there are input arguments
+        for (int i = 1; i < argc; i++) {
+            String arg = String(argv[i]);
+            load_and_train_image(arg, keypoints_list, descriptors_list);
+        }
+    } else {
+        printf("No files selected!\n\r");
+    }
 
     // Read in images
     Mat train_image = imread("/home/isthatme/face-finder-2000/face_train.jpg", IMREAD_COLOR);
@@ -55,4 +74,20 @@ int main(int argc, char** argv) {
     waitKey(0);
 
     return 0;
+}
+
+void load_and_train_image(String& file_string,
+        vector< vector<KeyPoint> > keypoints_list, vector<Mat> descriptors_list) {
+    // Load image
+    // TODO: save images for later
+    // TODO: add to list
+    Mat train_image = imread(file_string, IMREAD_COLOR);
+
+    // Detect keypoints/descriptors
+    vector<KeyPoint> keypoints;
+    Mat descriptors;
+    detector->detectAndCompute(train_image, Mat(), keypoints, descriptors);
+
+
+    matcher->add(descriptors);
 }

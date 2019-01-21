@@ -3,14 +3,13 @@
 # It kind of assumes that directories are hardcoded.
 # It also assumes you have a version of OpenCV installed with SURF.
 
+# TODO: add support for using SIFT instead
+
 cmake_minimum_required(VERSION 3.0)
 project(Face-Finder-2000)
 
-include_directories("/usr/local/include")
 
-set(OPENCV_INSTALL_DIR "/usr" CACHE STRING "Location of OpenCV installation")
-
-# Defines OPENCV_LIBS variable
+# Includes OpenCV libraries and defines OPENCV_LIBS variable
 include("${CMAKE_CURRENT_SOURCE_DIR}/opencv_libs.cmake")
 
 

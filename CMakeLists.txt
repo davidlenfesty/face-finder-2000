@@ -8,11 +8,10 @@
 cmake_minimum_required(VERSION 3.0)
 project(Face-Finder-2000)
 
-
 # Includes OpenCV libraries and defines OPENCV_LIBS variable
 include("${CMAKE_CURRENT_SOURCE_DIR}/opencv_libs.cmake")
 
 
 add_executable(find_face face_finder.cpp)
 target_link_libraries(find_face ${OPENCV_LIBS})
-
+target_compile_options(find_face PUBLIC -Werror)

@@ -88,7 +88,6 @@ int main(int argc, char** argv) {
     printf("Sorted matches! Number of images: %lu\n\r", sorted_matches.size());
 
     // Draw matches from query image to training image
-    /*
     for (long unsigned int i = 0; i < images_list.size(); i++) {
         Mat out_image;
         drawMatches(query_image, query_keypoints, images_list[i], keypoints_list[i],
@@ -101,13 +100,6 @@ int main(int argc, char** argv) {
         imshow(desc, out_image);
 
     }
-    */
-    Mat out_image;
-
-    drawMatches(query_image, query_keypoints, images_list[0], keypoints_list[0],
-            sorted_matches[0], out_image, Scalar::all(-1), Scalar::all(-1),
-            vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
-    imshow("Thing", out_image);
     printf("Finished showing matches\n\r");
     waitKey(0);
 
